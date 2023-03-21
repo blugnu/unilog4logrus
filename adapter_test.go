@@ -11,7 +11,7 @@ import (
 	"github.com/blugnu/unilog"
 )
 
-func TestLogrusAdapter(t *testing.T) {
+func TestAdapter(t *testing.T) {
 	// ARRANGE
 	logger := logrus.New()
 	logger.SetOutput(log.Sink())
@@ -81,7 +81,54 @@ func TestLogrusAdapter(t *testing.T) {
 	}
 }
 
-func TestLogrusEntryAdapter(t *testing.T) {
+func TestSetLevel(t *testing.T) {
+	// ARRANGE
+	lr := logrus.New()
+	lr.SetOutput(log.Sink())
+	lr.SetFormatter(&logrus.TextFormatter{
+		DisableTimestamp: true,
+	})
+	sut := &adapter{lr}
+
+	testcases := []struct {
+		level   unilog.Level
+		entries int
+	}{
+		{level: unilog.Trace, entries: 6},
+		{level: unilog.Debug, entries: 5},
+		{level: unilog.Info, entries: 4},
+		{level: unilog.Warn, entries: 3},
+		{level: unilog.Error, entries: 2},
+		{level: unilog.Fatal, entries: 1},
+	}
+	for _, tc := range testcases {
+		t.Run(tc.level.String(), func(t *testing.T) {
+			// ARRANGE
+			defer log.Reset()
+
+			// ACT
+			sut.SetLevel(tc.level)
+			lr.Trace("trace")
+			lr.Debug("debug")
+			lr.Info("info")
+			lr.Warn("warning")
+			lr.Error("error")
+			// Use Log with level for Fatal, since lr.Fatal() would log and exit
+			lr.Log(logrus.FatalLevel, "fatal")
+
+			// ASSERT
+			t.Run("expected log entries", func(t *testing.T) {
+				wanted := tc.entries
+				got := log.NumEntries()
+				if wanted != got {
+					t.Errorf("wanted %v, got %v", wanted, got)
+				}
+			})
+		})
+	}
+}
+
+func TestEntryAdapter(t *testing.T) {
 	// ARRANGE
 	logger := logrus.New()
 	logger.SetOutput(log.Sink())
@@ -156,12 +203,22 @@ func TestLogger(t *testing.T) {
 	log := &logrus.Logger{}
 
 	// ACT
-	result := Logger(ctx, log)
+	logger, cfg := Logger(ctx, log)
 
 	// ASSERT
-	wanted := unilog.UsingAdapter(ctx, &adapter{log})
-	got := result
-	if !reflect.DeepEqual(wanted, got) {
-		t.Errorf("\nwanted %#v\ngot    %#v", wanted, got)
-	}
+	t.Run("returns expected logger", func(t *testing.T) {
+		wanted := unilog.UsingAdapter(ctx, &adapter{log})
+		got := logger
+		if !reflect.DeepEqual(wanted, got) {
+			t.Errorf("\nwanted %#v\ngot    %#v", wanted, got)
+		}
+	})
+
+	t.Run("returns expected configuration", func(t *testing.T) {
+		wanted := &adapter{log}
+		got := cfg
+		if !reflect.DeepEqual(wanted, got) {
+			t.Errorf("\nwanted %#v\ngot    %#v", wanted, got)
+		}
+	})
 }
