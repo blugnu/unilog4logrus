@@ -18,9 +18,10 @@ Implements a [unilog](https://github.com/blugnu/unilog) `Adapter` to emit logs u
 
 ## How To use This Adapter
 
-1. Configure your `logrus` logger in whatever way suits your project
+1. Configure your [logrus](https://github.com/sirupsen/logrus) logger in whatever way suits your project
 2. Initialise a `unilog.Logger` by calling `unilog4logrus.Logger()`, supplying an initial context and the configured [logrus](https://github.com/sirupsen/logrus) logger
-3. Pass the `unilog.Logger` into any modules that support a [unilog](https://github.com/blugnu/unilog) Logger`
+3. _OPTIONAL_: configure the adapter if required, using the `Configuration` interface accessible from the `Logger`.
+3. Pass the `unilog.Logger` into any modules used by your project that support a [unilog](https://github.com/blugnu/unilog) `Logger``
 4. Emit logs from your project using the `unilog.Logger`
 5. Enjoy reading your logs!
 
@@ -36,16 +37,18 @@ func main() {
 		Out:       os.Stderr,
 		Formatter: &logrus.JSONFormatter{},
 		Hooks:     make(logrus.LevelHooks),
-		Level:     logrus.DebugLevel,
+    // configure logging level:
+		Level:     logrus.DebugLevel, 
 	}
 
-  // Get a unilog encapsulating the logrus logger
-	logger = unilog4logrus.Logger(context.Background(), lr)
+  // Get a unilog Logger using the logrus logger (ignoring the configuration interface also returned)
+	logger, _ = unilog4logrus.Logger(context.Background(), lr)
 
-  // Pass logger into the `foo` module, which supports unilog
+  // Pass logger into the `foo` module (which supports injecting 
+  // unilog via a package variable)
   foo.Logger = logger
 
-  // Do some logging ourselves
+  // Do some logging ourselves...
   log := logger.NewEntry()
   log.Info("logging initialised")
 
@@ -55,5 +58,30 @@ func main() {
   }
 
   // ... etc
+}
+```
+
+#### Example: Using the (optional) Configuration interface
+
+```golang
+var logger unilog.Logger
+
+func main() {
+  // Configure a logrus logger
+	lr := &logrus.Logger{
+		Out:       os.Stderr,
+		Formatter: &logrus.JSONFormatter{},
+		Hooks:     make(logrus.LevelHooks),
+    // NOTE: logging level NOT configured
+	}
+
+  // Get a unilog Logger with logrus adapter and configuration interface
+  var cfg unilog4logrus.Configuration
+	logger, cfg = unilog4logrus.Logger(context.Background(), lr)
+
+  // Set logging level using Configuration interface
+  cfg.SetLevel(unilog.Debug)
+
+  // etc...
 }
 ```
