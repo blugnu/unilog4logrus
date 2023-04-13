@@ -32,17 +32,19 @@ Implements a [unilog](https://github.com/blugnu/unilog) `Adapter` to emit logs u
 var logger unilog.Logger
 
 func main() {
+  ctx := context.Background()
+
   // Configure a logrus logger
 	lr := &logrus.Logger{
 		Out:       os.Stderr,
 		Formatter: &logrus.JSONFormatter{},
 		Hooks:     make(logrus.LevelHooks),
-    // configure logging level:
 		Level:     logrus.DebugLevel, 
 	}
 
   // Get a unilog Logger using the logrus logger (ignoring the configuration interface also returned)
-	logger, _ = unilog4logrus.Logger(context.Background(), lr)
+
+	logger, _ = unilog4logrus.Logger(ctx, lr)
 
   // Pass logger into the `foo` module (which supports injecting 
   // unilog via a package variable)
@@ -67,6 +69,9 @@ func main() {
 var logger unilog.Logger
 
 func main() {
+
+  ctx := context.Background()
+
   // Configure a logrus logger
 	lr := &logrus.Logger{
 		Out:       os.Stderr,
@@ -77,7 +82,8 @@ func main() {
 
   // Get a unilog Logger with logrus adapter and configuration interface
   var cfg unilog4logrus.Configuration
-	logger, cfg = unilog4logrus.Logger(context.Background(), lr)
+
+	logger, cfg = unilog4logrus.Logger(ctx, lr)
 
   // Set logging level using Configuration interface
   cfg.SetLevel(unilog.Debug)
