@@ -2,10 +2,10 @@ github.com/blugnu/go-errorcontext v0.1.0 h1:/VRIE4BIygFNq5vvf6Z+ZgdZP0JV7+GGOICG
 github.com/blugnu/go-errorcontext v0.1.0/go.mod h1:OB/kqD+3gkypupbcXPyWoPj5aVU5xfoymZfmMojh9mQ=
 github.com/blugnu/go-logspy v0.1.1 h1:jpu9E7IWr8GcUo6jbqQ9juaxORPiPLvgnmkTs72XU2o=
 github.com/blugnu/go-logspy v0.1.1/go.mod h1:E+PMio89HeNXJ8TLGXGS3XX7cFRFe0i8oOpCOBeBuz4=
-github.com/blugnu/unilog v1.0.0 h1:AwtfUPN+WP4uqCdIGxHIxZpTN+ZBR3U5JfaDifMhaNU=
-github.com/blugnu/unilog v1.0.0/go.mod h1:V7In7yF6yDtKDXyC/jCPUArh0BdVZX201DNVqR7Imts=
 github.com/blugnu/unilog v1.0.1 h1:fUS9GwAD51sYJraBmwr8M60u+0ovz+VmMOJo0XMx168=
 github.com/blugnu/unilog v1.0.1/go.mod h1:OcDT8BG9BiIW70gclz4N16+hvxq8kVLIRprcObffOAQ=
+github.com/blugnu/unilog v1.1.0 h1:ppWqgDESz+taTGnLWBGqHt9+KpsUdBFvKrkwsLF0rX8=
+github.com/blugnu/unilog v1.1.0/go.mod h1:OcDT8BG9BiIW70gclz4N16+hvxq8kVLIRprcObffOAQ=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

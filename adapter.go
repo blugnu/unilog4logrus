@@ -17,7 +17,9 @@ type Configuration interface {
 }
 
 // Logger returns a `Logger` that wraps a specified `logrus.Logger` and
-// a supplied `Context`.
+// a supplied `Context`, together with a Configuration interface which
+// may (optionally) be used to configure the adapter and/or underlying
+// logrus logger.
 func Logger(ctx context.Context, log *logrus.Logger) (unilog.Logger, Configuration) {
 	a := &adapter{log}
 	return unilog.UsingAdapter(ctx, a), a
@@ -62,7 +64,7 @@ func (log *adapter) WithField(name string, value any) unilog.Adapter {
 }
 
 // entryAdapter implements the unilog.Adapter interface encapsulating
-// an `logrus.Entry`.
+// a `logrus.Entry`.
 type entryAdapter struct {
 	*logrus.Entry
 }
