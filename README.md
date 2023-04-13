@@ -43,6 +43,7 @@ func main() {
 	}
 
   // Get a unilog Logger using the logrus logger (ignoring the configuration interface also returned)
+
 	logger, _ = unilog4logrus.Logger(ctx, lr)
 
   // Pass logger into the `foo` module (which supports injecting 
@@ -68,6 +69,7 @@ func main() {
 var logger unilog.Logger
 
 func main() {
+
   ctx := context.Background()
 
   // Configure a logrus logger
@@ -80,6 +82,7 @@ func main() {
 
   // Get a unilog Logger with logrus adapter and configuration interface
   var cfg unilog4logrus.Configuration
+
 	logger, cfg = unilog4logrus.Logger(ctx, lr)
 
   // Set logging level using Configuration interface
