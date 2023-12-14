@@ -1,11 +1,11 @@
 repo_name: blugnu/unilog4logrus
-report_id: 85d97a77902b79fbc10879966805c809
+report_id: 1277f55900893c3b6fbf415284cff2bd
 repo_type: Public
-timestamp: '2023-11-10T03:38:42+00:00'
+timestamp: '2023-12-14T10:09:04+00:00'
 requested_by: deltics
 provider: github
 branch: master
-detected_tools_count: 3
+detected_tools_count: 5
 tools:
 - name: Golang
   description: An open source programming language that makes it easy to build simple,
@@ -35,6 +35,34 @@ tools:
   category: Build, Test, Deploy
   sub_category: Continuous Integration
   image_url: https://img.stackshare.io/service/11563/actions.png
-  detection_source: ".github/workflows/qa.yml"
+  detection_source: ".github/workflows/pipeline.yml"
+  last_updated_by: Jolyon Direnko-Smith
+  last_updated_on: 2023-11-22 01:43:21.000000000 Z
+- name: logrus
+  description: Structured, pluggable logging for Go
+  package_url: https://pkg.go.dev/github.com/sirupsen/logrus
+  version: 1.9.3
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/blugnu/unilog4logrus/blob/master/go.sum
+  detection_source: go.mod
+  last_updated_by: Jolyon Direnko-Smith
+  last_updated_on: 2023-08-25 01:30:34.000000000 Z
+- name: sys
+  description: Go packages for low-level interaction with the operating system
+  package_url: https://pkg.go.dev/golang.org/x/sys
+  version: 0.0.0
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/blugnu/unilog4logrus/blob/master/go.sum
+  detection_source: go.mod
   last_updated_by: Jolyon Direnko-Smith
   last_updated_on: 2023-03-21 08:10:13.000000000 Z
